@@ -28,8 +28,6 @@ The requirements are the following:
  - Saving a file and reloading a page in the browser should work like
    the old "traditionnal" when development techniques, that is, the
    changes are visible without server restart.
- - The `handle` script should be a stand alone nodejs script that we can
-   cut/paste in a directory to use it, if we want.
  - The script should run the tests of our project at compilation time.
 
 Usage
