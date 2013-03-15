@@ -1,6 +1,6 @@
 LRL Recursive License
 =====================
-_Copyright Dorian Trupin © 2013_
+_Copyright Dorian Trupin <daeldir@gmail.com> © 2013_
 
 Permission is granted  to  use,  copy,  modify and/or distribute this
 work as long as:
