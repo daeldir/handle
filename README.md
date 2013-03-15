@@ -50,6 +50,6 @@ Usage
    access.
  * TODO: handle coverage: run tests and report code coverage of the
    tests.
- * TODO: handle completude: run fetaure tests and report the project
+ * TODO: handle completude: run feature tests and report the project
    advancement state.
 
