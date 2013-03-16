@@ -87,3 +87,16 @@ directory. We also will be manipulating file paths.
     path = require 'path'
 ```
 
+### Compilation
+
+We know what code to compile thank to some conventions. In the project,
+the file `server.coffee.md` is the entry point for the server side code,
+and is the script ran when we issue `handle run`. `client.coffee.md` is
+the entry point for the client side code. All remaining source code is
+in the directory `src/`. In `views/` are the CSS and HTML templates. In
+`public/` are some static ressources (images...). 
+
+Almost all the compiled code – all the code loaded in the browser – goes
+into a `cache/` directory, except the server side code that goes into
+the `lib/` directory.
+
