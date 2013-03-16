@@ -121,24 +121,6 @@ First, we compile all the files from `./src` to `./lib`, creating
           fs.writeFileSync newPath, js
 ```
 
-The `walkTree` function recursively read all the files in a directory,
-calling a function with those paths. The argument of the callback
-function is the path of a file in that directory.
-
-```coffeescript
-    walkTree = (name = './', order = 'top-down', {dir, file}) ->
-      dir ?= (->); file ?= (->)
-      dir name if order is 'top-down'
-      files = fs.readdirSync name
-      for f in files
-        filePath = path.join name, f
-        if fs.statSync(filePath).isDirectory()
-          walkTree filePath, order, dir: dir, file: file
-        else
-          file filePath
-      dir name if order is 'bottom-up'
-```
-
 #### Compiling the browser side code
 
 We will place some code into a cache. We need to create it if it does
@@ -195,4 +177,38 @@ hopefully, all in reserved directories: `cache`, and `lib` for now.
 ```coffeescript
     if process.argv[2]? and process.argv[2] is 'clean'
       clean()
+```
+### Utility functions
+
+#### walkTree
+
+The `walkTree` function recursively read all the files in a directory.
+It will call a function for each directory it traverses, and for each
+file it encounters. Depending on what we want to do, we may prefer to do
+an action on a directory before it's content (when doing a copy, for
+example), or after (e.g. when deleting). So, `walkTree` take three
+arguments: 
+
+ * The name of the directory we have to walk through.
+ * The order of execution, top-down being directory processed first,
+   bottom-up being content processed first.
+ * The actions to take, as an object. `dir` contains the action to take
+   when processing a directory, and `file` contains the action to take
+   on each file.
+
+By default, we walk through the current directory, processing
+directories before their content, and doing nothing.
+
+```coffeescript
+    walkTree = (name = './', order = 'top-down', {dir, file}) ->
+      dir ?= (->); file ?= (->)
+      dir name if order is 'top-down'
+      files = fs.readdirSync name
+      for f in files
+        filePath = path.join name, f
+        if fs.statSync(filePath).isDirectory()
+          walkTree filePath, order, dir: dir, file: file
+        else
+          file filePath
+      dir name if order is 'bottom-up'
 ```
