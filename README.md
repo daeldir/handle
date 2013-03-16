@@ -131,3 +131,26 @@ function is the path of a file in that directory.
           callback filePath
 ```
 
+#### Compiling the browser side code
+
+We will place some code into a cache. We need to create it if it does
+not exists. We also create the `js` directory, where `client.js` will
+land, if it does not exist. Then, we load ou lib into `browserify`, and
+that module will do all the work for us.
+
+Writing a bundle with `browserify` is not really practical. I remember a
+time when `client.bundle()` would have returned a string. Or maybe did I
+dream? Anyway, we make the bundle, which return a `Stream`, which we
+pipe into a file stream, which we create with the `fs` module. All text
+sent to this stream will be written in `cache/js/client.js`. Because 
+`fs.writeFileSync 'cache/js/client.js', client.bundle()` would have been
+too straightforward...
+
+```coffeescript
+    commonJsToBrowser = ->
+      fs.mkdirSync 'cache' unless fs.existsSync 'cache'
+      fs.mkdirSync 'cache/js' unless fs.existsSync 'cache/js'
+      client = browserify './lib/client.js'
+      client.bundle().pipe fs.createWriteStream 'cache/js/client.js'
+```
+
