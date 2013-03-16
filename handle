@@ -1,0 +1,16 @@
+#!/usr/bin/env coffee
+
+path = require 'path'
+fs = require 'fs'
+{spawn} = require 'child_process'
+
+basedir = path.join path.dirname fs.realpathSync __filename
+
+coffee = spawn 'coffee', ["#{basedir}/handle.coffee.md"]
+
+coffee.stdout.on 'data', (data) ->
+  console.log data.toString()
+
+coffee.stderr.on 'data', (data) ->
+  console.error data.toString()
+
