@@ -51,3 +51,10 @@ Usage
  * TODO: handle completude: run feature tests and report the project
    advancement state.
 
+How does it works?
+------------------
+
+The file you are currently reading is the implementation of `handle`,
+written in literate CoffeeScript. Now that we explained what the program
+should do, let's get into the code!
+
