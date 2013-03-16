@@ -3,6 +3,24 @@ handle
 
 A CoffeeScript literate programming project manager
 
+Table of Content
+----------------
+
+> 1. [Table of Content](#table-of-content)
+> 2. [What is it?](#what-is-it)
+> 3. [Usage](#usage)
+> 4. [How does it works?](#how-does-it-works)
+>    1. [Dependencies](#dependencies)
+>    2. [Compilation](compilation)
+>       1. [Compiling all the
+>           CoffeeScript](#compiling-all-the-coffeescript)
+>       2. [Compiling the browser side
+>           code](#compiling-the-browser-side-code)
+>    3. [Cleaning](#cleaning)
+>    4. [Utility functions](#utility-functions)
+>       1. [walkTree](#walktree)
+>    5. [Taking the actions](#taking-the-actions)
+
 What is it?
 -----------
 
