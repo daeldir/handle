@@ -100,3 +100,40 @@ Almost all the compiled code – all the code loaded in the browser – goes
 into a `cache/` directory, except the server side code that goes into
 the `lib/` directory.
 
+#### Compiling all the CoffeeScript
+
+We begin by compiling all the CoffeeScripts files to Javascript. The
+client-side bundle generation by browserify will come later, using the
+Javascript version of our code.
+
+First, we compile all the files from `./src` to `./lib`, creating
+`./lib` if it does not exist.
+
+```coffeescript
+    srcToLib = ->
+      return unless fs.existsSync 'src'
+      fs.mkdirSync 'lib' unless fs.existsSync 'lib'
+      walkTree 'src', (file) ->
+        code = fs.readFileSync(file).toString()
+        newPath = file
+          .replace('src/', 'lib/')
+          .replace('.coffee.md', '.js')
+        fs.writeFileSync newPath, coffee.compile code
+```
+
+The `walkTree` function recursively read all the files in a directory,
+calling a function with those paths. The argument of the function is the
+path of a file in that directory.
+
+```coffeescript
+    walkTree = (directory, callback) ->
+      files = fs.readdirSync directory
+      for file in files
+        filePath = path.join directory, file
+        if fs.statSync(filePath).isDirectory()
+          walkTree filePath, callback
+        else
+          callback filePath
+```
+
+
