@@ -118,7 +118,8 @@ First, we compile all the files from `./src` to `./lib`, creating
         newPath = file
           .replace('src/', 'lib/')
           .replace('.coffee.md', '.js')
-        fs.writeFileSync newPath, coffee.compile code
+        js = coffee.compile code, literate: yes
+        fs.writeFileSync newPath, js
 ```
 
 The `walkTree` function recursively read all the files in a directory,
