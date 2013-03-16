@@ -35,12 +35,12 @@ Usage
 
 **handle** _command_
 
+ * handle compile: compile the server.
  * TODO: handle watch: compile and start the server, and do it again at
    each file change.
  * TODO: handle run: compile and start the server.
  * TODO: handle safe-run: compile and start the server, and start it
    again if the server crash.
- * TODO: handle compile: compile the server.
  * TODO: handle bundle: compile the server and place all generated files
    in a directory, which can be started as a standalone application,
    without having to fetch the dependencies.
@@ -153,4 +153,21 @@ too straightforward...
       client = browserify './lib/client.js'
       client.bundle().pipe fs.createWriteStream 'cache/js/client.js'
 ```
+
+#### Doing the compilation if asked
+
+Well, we only defined functions. If we written `handle compile` on the
+command line, we want to call these functions. Here it is:
+
+```coffeescript
+    if process.argv[2]? and process.argv[2] is 'compile'
+      srcToLib()
+      commonJsToBrowser()
+```
+
+Note that we count three arguments (from zero). Argument zero is
+`coffee`, it is the program called. Argument one is the name of our
+handle script. Argument two is the one that will contain the wanted
+command (`compile`, `run`, `watch`...).
+
 
