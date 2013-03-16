@@ -122,8 +122,8 @@ First, we compile all the files from `./src` to `./lib`, creating
 ```
 
 The `walkTree` function recursively read all the files in a directory,
-calling a function with those paths. The argument of the function is the
-path of a file in that directory.
+calling a function with those paths. The argument of the callback
+function is the path of a file in that directory.
 
 ```coffeescript
     walkTree = (directory, callback) ->
