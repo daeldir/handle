@@ -58,3 +58,32 @@ The file you are currently reading is the implementation of `handle`,
 written in literate CoffeeScript. Now that we explained what the program
 should do, let's get into the code!
 
+### Dependencies
+
+We depend on many libraries. We will need `coffee-templates` to compile
+our coffeescript templates into HTML, and `coffee-stylesheets` to
+compile into CSS. We will also need `browserify` to generate a
+javascript bundle loadable in the browser and coded with CommonJS module
+system.
+
+```coffeescript
+    templates = require 'coffee-templates'
+    stylesheets = require 'coffee-stylesheets'
+    browserify = require 'browserify'
+```
+
+We also need to load the CoffeeScript library to compile the project
+code into Javascript:
+
+```coffeescript
+    coffee = require 'coffee-script'
+```
+
+We will read files to compile the source code and walk the tree
+directory. We also will be manipulating file paths.
+
+```coffeescript
+    fs = require 'fs'
+    path = require 'path'
+```
+
