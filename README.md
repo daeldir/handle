@@ -107,13 +107,17 @@ First, we compile all the files from `./src` to `./lib`, creating
     srcToLib = ->
       return unless fs.existsSync 'src'
       fs.mkdirSync 'lib' unless fs.existsSync 'lib'
-      walkTree 'src', (file) ->
-        code = fs.readFileSync(file).toString()
-        newPath = file
-          .replace('src/', 'lib/')
-          .replace('.coffee.md', '.js')
-        js = coffee.compile code, literate: yes
-        fs.writeFileSync newPath, js
+      walkTree 'src', 'top-down',
+        dir: (dir) ->
+          newPath = dir.replace('src/', 'lib/')
+          fs.mkdirSync newPath unless fs.existsSync newPath
+        file: (file) ->
+          code = fs.readFileSync(file).toString()
+          newPath = file
+            .replace('src/', 'lib/')
+            .replace('.coffee.md', '.js')
+          js = coffee.compile code, literate: yes
+          fs.writeFileSync newPath, js
 ```
 
 The `walkTree` function recursively read all the files in a directory,
@@ -121,14 +125,17 @@ calling a function with those paths. The argument of the callback
 function is the path of a file in that directory.
 
 ```coffeescript
-    walkTree = (directory, callback) ->
-      files = fs.readdirSync directory
-      for file in files
-        filePath = path.join directory, file
+    walkTree = (name = './', order = 'top-down', {dir, file}) ->
+      dir ?= (->); file ?= (->)
+      dir name if order is 'top-down'
+      files = fs.readdirSync name
+      for f in files
+        filePath = path.join name, f
         if fs.statSync(filePath).isDirectory()
-          walkTree filePath, callback
+          walkTree filePath, order, dir: dir, file: file
         else
-          callback filePath
+          file filePath
+      dir name if order is 'bottom-up'
 ```
 
 #### Compiling the browser side code
