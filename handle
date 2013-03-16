@@ -5,8 +5,9 @@ fs = require 'fs'
 {spawn} = require 'child_process'
 
 basedir = path.join path.dirname fs.realpathSync __filename
+args = ["#{basedir}/handle.coffee.md"].concat process.argv[2..]
 
-coffee = spawn 'coffee', ["#{basedir}/handle.coffee.md"]
+coffee = spawn 'coffee', args
 
 coffee.stdout.on 'data', (data) ->
   console.log data.toString()
